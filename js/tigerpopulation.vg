@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Tiger Population (2014)",
+  "width": 400,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/EmreCakmakcioglu/3179Assignment2/main/js/asia.topojson",
+    "format": {"type": "topojson", "feature": "custom.geo(1)"}
+  },
+  
+  "transform": [
+    {
+      "lookup": "properties.sovereignt",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/EmreCakmakcioglu/3179HomeworkWeek10/main/data/tigerpopulationcountry2014.csv"
+        },
+        "key": "Country",
+        "fields": ["Tigers"]
+      }
+    },
+    {"calculate": "(datum.Tigers)/1", "as": "Tiger Population"}
+  ],
+  "projection": {
+    "type": "mercator",
+    "scale": 200,
+    "center": [78, 44],
+    "clipExtent": [[0, 0], [400,400]]
+  },
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Tiger Population",
+      "type": "quantitative",
+      "scale": {
+        "type": "linear",
+        "range": ["#440154", "#33638D", "#29AF7F", "#DCE319"]}
+    },
+    "tooltip": [
+      {"field": "properties.sovereignt", "type": "nominal", "title": "Country"},
+      {"field": "Tiger Population", "type": "quantitative"}
+    ]
+    
+    
+  }
+}
