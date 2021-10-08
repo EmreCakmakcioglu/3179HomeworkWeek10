@@ -1,0 +1,54 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Tiger population - India (Projected)",
+    "data": {"url": "https://raw.githubusercontent.com/EmreCakmakcioglu/3179HomeworkWeek10/main/data/SelectedPop.csv"},    
+    
+    "mark": {
+        "type":"line",
+        "point":true
+    },
+    "encoding": {
+        "x": {"field":"Year", "type": "temporal"},
+        "y": {"field": "Population", "type": "quantitative"},
+        "color":{"field":"Country","type": "nominal"},
+        "tooltip":[
+            {"field": "Year", "type": "temporal"},
+            {"field": "Population" , "type": "quantitative"}
+        ]
+    },
+
+    "params":[
+        {
+            "name": "Country_Selection",
+            "bind": {
+                "input": "select",
+                "options":[
+                    null,
+                    "India",
+                    "China",
+                    "Indonesia"
+                ],
+                "labels": [
+                    "Show All",
+                    "India",
+                    "China",
+                    "Indonesia"
+                ],
+                "name": "Country Selection  "
+            }
+        }
+    ],
+
+    "transform":[
+        {"filter": "Country_Selection==null || datum.Country == Country_Selection"}
+    ],
+
+    
+    "width": 400,
+    "height": 400,
+    "config": {
+        "legend": {
+            "disable": false
+            }
+    }
+}
